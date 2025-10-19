@@ -15,7 +15,10 @@ public class Personagem {
     private int experienciaAtual;
     private int experienciaNecessaria;
 
-    public Personagem(String nome, Raca raca, Classe classe) {
+
+    public Personagem(String nome, Raca raca, Classe classe) throws Exception {
+
+
         this.nome = nome;
         this.raca = raca;
         this.classe = classe;
@@ -33,8 +36,19 @@ public class Personagem {
         this.nivel = 1;
         this.experienciaAtual = 0;
         this.experienciaNecessaria = calcularExperienciaNecessaria();
+
+
     }
 
+    // Getters
+    public String getNome() { return nome; }
+    public Raca getRaca() { return raca; }
+    public Classe getClasse() { return classe; }
+    public int getAtaque() { return ataque; }
+    public int getDefesa() { return defesa; }
+    public int getVidaAtual() { return vidaAtual; }
+    public int getVidaMaxima() { return vidaMaxima; }
+    public int getNivel() { return nivel; }
 
     //EXPERIENCIA
     private int calcularExperienciaNecessaria() {
@@ -49,29 +63,33 @@ public class Personagem {
         }
     }
 
-    private void subirDeNivel(){
+    private void subirDeNivel() {
         experienciaAtual -= experienciaNecessaria;
         nivel++;
         experienciaNecessaria = calcularExperienciaNecessaria();
 
-        // Pode crescer atributos aqui se quiser
-        vidaMaxima += 10;
-        ataque += 2;
-        defesa += 1;
-        vidaAtual = vidaMaxima;
+        // Escala os atributos com base no nível
+        vidaMaxima = (classe.getBaseVida() + raca.getBonusVida()) * nivel;
+        ataque = (classe.getBaseAtaque() + raca.getBonusAtaque()) * nivel;
+        defesa = (classe.getBaseDefesa() + raca.getBonusDefesa()) * nivel;
+        manaAtual = (classe.getBaseMana() + raca.getBonusMana()) * nivel;
+        staminaAtual = (classe.getBaseStamina() + raca.getBonusStamina()) * nivel;
+
+        vidaAtual = vidaMaxima; // restaura vida ao subir de nível
 
         System.out.println(nome + " subiu para o nível " + nivel + "!");
     }
 
-    // Método de dano
+
+    // Dano
     public void receberDano(int dano) {
         this.vidaAtual -= dano;
         if (this.vidaAtual < 0) this.vidaAtual = 0;
 
         if (!estaVivo()) {
-            System.out.println("===============================================");
+            System.out.println("\n===============================================");
             System.out.println(nome + " foi derrotado! FIM DE JOGO!!!");
-            System.out.println("===============================================");
+            System.out.println("===============================================\n");
 
             System.exit(0);
 

@@ -21,14 +21,14 @@ public class Inimigo {
         this.classe = classe;
         this.inventario = new Inventario();
         this.nivel = nivel;
-        this.experienciaDrop = experienciaDrop;
+        this.experienciaDrop = nivel * nivel * experienciaDrop;
 
         // Atributos baseados na raça e classe
-        this.vidaMaxima = classe.getBaseVida() + raca.getBonusVida();
-        this.ataque = classe.getBaseAtaque() + raca.getBonusAtaque();
-        this.defesa = classe.getBaseDefesa() + raca.getBonusDefesa();
-        this.manaAtual = classe.getBaseMana() + raca.getBonusMana();
-        this.staminaAtual = classe.getBaseStamina() + raca.getBonusStamina();
+        this.vidaMaxima = (classe.getBaseVida() + raca.getBonusVida()) * nivel;
+        this.ataque = (classe.getBaseAtaque() + raca.getBonusAtaque()) * nivel;
+        this.defesa = (classe.getBaseDefesa() + raca.getBonusDefesa()) * nivel;
+        this.manaAtual = (classe.getBaseMana() + raca.getBonusMana()) * nivel;
+        this.staminaAtual = (classe.getBaseStamina() + raca.getBonusStamina()) * nivel;
 
         this.vidaAtual = vidaMaxima;
     }
@@ -44,15 +44,15 @@ public class Inimigo {
     public int getNivel() { return nivel; }
     public int getExperienciaDrop() { return experienciaDrop; }
 
-    // Método de dano
+    // Dano
     public void receberDano(int dano, Personagem atacante) {
         this.vidaAtual -= dano;
         if (this.vidaAtual < 0) this.vidaAtual = 0;
 
         if (!estaVivo()) {
-            System.out.println("===============================================");
+            System.out.println("\n===============================================");
             System.out.println(nome + " foi derrotado e dropou " + experienciaDrop + " de experiência!");
-            System.out.println("===============================================");
+            System.out.println("===============================================\n");
 
             atacante.ganharExperiencia(experienciaDrop);
         }
@@ -64,7 +64,7 @@ public class Inimigo {
 
     // Exibir status
     public void exibirStatus() {
-        System.out.println("\n=== Inimigo: " + nome + " ===");
+        System.out.println("\n==== Inimigo: " + nome + " ====");
         System.out.println("Raça: " + raca.getNome() + " | Classe: " + classe.getNome());
         System.out.println("Nível: " + nivel);
         System.out.println("Vida: " + vidaAtual + "/" + vidaMaxima);
@@ -75,7 +75,7 @@ public class Inimigo {
 
     // Inimigos pré-definidos
     public static Inimigo GOBLIN() {
-        return new Inimigo("Goblin", Raca.ORC(), Classe.LADINO(), 2, 1000);
+        return new Inimigo("Goblin", Raca.ORC(), Classe.LADINO(), 3, 50);
     }
 
     public static Inimigo ESQUELETO() {
