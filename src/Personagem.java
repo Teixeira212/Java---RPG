@@ -1,4 +1,4 @@
-public abstract class Personagem {
+public class Personagem {
     private String nome;
     private Inventario inventario;
     private Raca raca;
@@ -35,6 +35,8 @@ public abstract class Personagem {
         this.experienciaNecessaria = calcularExperienciaNecessaria();
     }
 
+
+    //EXPERIENCIA
     private int calcularExperienciaNecessaria() {
         return 100 * nivel;
     }
@@ -59,6 +61,25 @@ public abstract class Personagem {
         vidaAtual = vidaMaxima;
 
         System.out.println(nome + " subiu para o nível " + nivel + "!");
+    }
+
+    // Método de dano
+    public void receberDano(int dano) {
+        this.vidaAtual -= dano;
+        if (this.vidaAtual < 0) this.vidaAtual = 0;
+
+        if (!estaVivo()) {
+            System.out.println("===============================================");
+            System.out.println(nome + " foi derrotado! FIM DE JOGO!!!");
+            System.out.println("===============================================");
+
+            System.exit(0);
+
+        }
+    }
+
+    public boolean estaVivo() {
+        return vidaAtual > 0;
     }
 
     public void exibirStatus() {

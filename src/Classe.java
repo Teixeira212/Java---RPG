@@ -22,4 +22,26 @@ public class Classe {
     public int getBaseDefesa() { return baseDefesa; }
     public int getBaseMana() { return baseMana; }
     public int getBaseStamina() { return baseStamina; }
+
+
+    // Classes pré-definidas
+    public static Classe GUERREIRO() {
+        return new Classe("Guerreiro", 120, 15, 10, 0, 20);
+    }
+
+    public static Classe MAGO() {
+        return new Classe("Mago", 80, 5, 4, 25, 10);
+    }
+
+    public static Classe ARQUEIRO() {
+        return new Classe("Arqueiro", 90, 12, 6, 5, 25);
+    }
+
+    public static Classe LADINO() {
+        return new Classe("Ladino", 85, 10, 5, 5, 30);
+    }
+
+    public static Classe PALADINO() {
+        return new Classe("Paladino", 110, 12, 12, 10, 15);
+    }
 }
