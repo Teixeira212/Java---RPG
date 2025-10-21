@@ -1,4 +1,3 @@
-import java.util.Random;
 import java.io.*;
 
 
@@ -11,7 +10,7 @@ public class SistemaCombateTurnos {
 
     }
 
-    private int mostrarMenu(Personagem jogador, Inimigo inimigo) throws IOException {
+    private int mostrarMenu(Personagem jogador, SubClasseInimigo inimigo) throws IOException {
         System.out.println("\n===========================");
         System.out.println("--------- TURNO " + turno + " ---------");
         System.out.println("===========================");
@@ -38,7 +37,7 @@ public class SistemaCombateTurnos {
 
 
     // Combate em turnos
-    public void batalhar(Personagem jogador, Inimigo inimigo) throws InterruptedException, IOException {
+    public void batalhar(Personagem jogador, SubClasseInimigo inimigo) throws InterruptedException, IOException {
         System.out.println("\n============================================");
         System.out.println("Início do combate entre " + jogador.getNome() + " e " + inimigo.getNome() + "!");
         System.out.println("============================================");

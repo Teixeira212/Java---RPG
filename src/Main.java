@@ -41,7 +41,7 @@ public class Main {
         // Escolha do nome
         System.out.print("Antes de partir, diga-nos seu nome, herói: ");
         String nome = reader.readLine();
-        reader.readLine();
+
         System.out.println("Muito bem, " + nome + ". Sua jornada começa agora.\n");
         pause(500);
 
@@ -95,12 +95,59 @@ public class Main {
         p1.exibirStatus();
 
         // Exemplo de inimigo e combate
-        Inimigo goblin = Inimigo.GOBLIN();
+        SubClasseInimigo goblin = SubClasseInimigo.GOBLIN();
         goblin.exibirStatus();
 
         //Exemplo Combate
         SistemaCombateTurnos combate = new SistemaCombateTurnos();
         combate.batalhar(p1, goblin);
+
+        //Exemplo de Item Equipavel
+        ItemEquipavel capacete1 = ItemEquipavel.CAPACETE_FERRO;
+
+        System.out.println("Antes de equipar:");
+        System.out.println(capacete1.exibirInfoEquipamento());
+
+        capacete1.equipar();
+
+        System.out.println("\nApós equipar:");
+        System.out.println(capacete1.exibirInfoEquipamento());
+
+
+        Inventario inv = new Inventario();
+
+        // Criar alguns itens equipáveis
+        ItemEquipavel capacete = ItemEquipavel.CAPACETE_FERRO;
+        ItemEquipavel peitoral = ItemEquipavel.PEITORAL_AÇO;
+        ItemEquipavel espada = ItemEquipavel.ESPADA_FLAMEJANTE;
+
+        // Adicionar no baú
+        inv.adicionarNoBau(capacete);
+        inv.adicionarNoBau(peitoral);
+        inv.adicionarNoBau(espada);
+
+        inv.listarItensBau();
+        inv.listarItensEquipados();
+
+        System.out.println("\nEquipando capacete e espada...");
+        inv.equiparItem(capacete);
+        inv.equiparItem(espada);
+
+        inv.listarItensBau();
+        inv.listarItensEquipados();
+
+        System.out.println("\nTentando equipar peitoral (slot livre)...");
+        inv.equiparItem(peitoral);
+
+        inv.listarItensBau();
+        inv.listarItensEquipados();
+
+        System.out.println("\nDesequipando capacete...");
+        inv.desequiparItem(ItemEquipavel.TipoEquipamento.CAPACETE);
+
+        inv.listarItensBau();
+        inv.listarItensEquipados();
+
     }
 
     // Pausa para narrativa
