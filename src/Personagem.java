@@ -1,19 +1,19 @@
 public class Personagem {
-    private String nome;
-    private Inventario inventario;
-    private Raca raca;
-    private Classe classe;
+    protected String nome;
+    protected Inventario inventario;
+    protected Raca raca;
+    protected Classe classe;
 
-    private int ataque;
-    private int defesa;
-    private int vidaMaxima;
-    private int vidaAtual;
-    private int manaAtual;
-    private int staminaAtual;
+    protected int ataque;
+    protected int defesa;
+    protected int vidaMaxima;
+    protected int vidaAtual;
+    protected int manaAtual;
+    protected int staminaAtual;
 
-    private int nivel;
-    private int experienciaAtual;
-    private int experienciaNecessaria;
+    protected int nivel;
+    protected int experienciaAtual;
+    protected int experienciaNecessaria;
 
 
     public Personagem(String nome, Raca raca, Classe classe) throws Exception {

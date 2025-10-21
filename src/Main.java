@@ -17,7 +17,7 @@ public class Main {
         pause(3000);
         System.out.println("Você nasceu nas Terras de Cinábria, o menor e mais esquecido dos sete reinos.");
         pause(2500);
-        System.out.println("Filho (ou filha) de um ferreiro e uma sacerdotisa exilada, cresceu ouvindo histórias sobre os dragões e sobre a antiga união dos povos.");
+        System.out.println("Filho de um ferreiro e uma sacerdotisa exilada, cresceu ouvindo histórias sobre os dragões e sobre a antiga união dos povos.");
         pause(3000);
         System.out.println("O que poucos sabem é que, mesmo após sua queda, alguns dragões antigos ainda permanecem ocultos nos reinos, cada um guardando um fragmento de um poder ancestral.");
         pause(3000);
@@ -41,6 +41,7 @@ public class Main {
         // Escolha do nome
         System.out.print("Antes de partir, diga-nos seu nome, herói: ");
         String nome = reader.readLine();
+        reader.readLine();
         System.out.println("Muito bem, " + nome + ". Sua jornada começa agora.\n");
         pause(500);
 
@@ -97,7 +98,7 @@ public class Main {
         Inimigo goblin = Inimigo.GOBLIN();
         goblin.exibirStatus();
 
-
+        //Exemplo Combate
         SistemaCombateTurnos combate = new SistemaCombateTurnos();
         combate.batalhar(p1, goblin);
     }
