@@ -7,37 +7,38 @@ public class Inventario {
     // Mapa que relaciona cada tipo de equipamento com o item equipado
     private EnumMap<ItemEquipavel.TipoEquipamento, ItemEquipavel> slotsEquipaveis;
 
-    // Baú onde ficam todos os itens (equipáveis e outros)
-    private List<Item> bau;
+    // Inventario onde ficam todos os itens (equipáveis e outros)
+    private List<Item> inventario;
 
     public Inventario() {
         slotsEquipaveis = new EnumMap<>(ItemEquipavel.TipoEquipamento.class);
-        bau = new ArrayList<>();
+        inventario = new ArrayList<>();
     }
 
-    // Adiciona item no baú
-    public void adicionarNoBau(Item item) {
-        bau.add(item);
-        System.out.println(item.getNome() + " adicionado ao baú.");
+    public void adicionarNoInventario(Item item) {
+        inventario.add(item);
+        System.out.println(item.getNome() + " adicionado ao inventário.");
     }
 
-    // Tenta equipar um item que está no baú (deve ser ItemEquipavel)
+    // Tenta equipar um item que está no inventário (deve ser ItemEquipavel)
     public boolean equiparItem(ItemEquipavel item) {
         ItemEquipavel.TipoEquipamento tipo = item.getTipo();
 
-        if (!bau.contains(item)) {
-            System.out.println("Item não está no baú.");
+        if (!inventario.contains(item)) {
+            System.out.println("Item não está no inventário.");
             return false;
         }
 
-        // Verifica se slot já está ocupado
+        // Se já existe um item equipado nesse slot, desequipa e coloca no inventário
         if (slotsEquipaveis.containsKey(tipo)) {
-            System.out.println("Slot " + tipo + " já está ocupado.");
-            return false;
+            ItemEquipavel itemAntigo = slotsEquipaveis.get(tipo);
+            itemAntigo.desequipar();
+            inventario.add(itemAntigo);
+            System.out.println(itemAntigo.getNome() + " foi removido do slot " + tipo + " e devolvido ao inventário.");
         }
 
-        // Remove do baú e adiciona no slot
-        bau.remove(item);
+        // Remove o novo item do inventário e equipa
+        inventario.remove(item);
         slotsEquipaveis.put(tipo, item);
         item.equipar();
 
@@ -45,7 +46,7 @@ public class Inventario {
         return true;
     }
 
-    // Desequipa item do slot e coloca no baú
+    // Desequipa item do slot e coloca no inventário
     public boolean desequiparItem(ItemEquipavel.TipoEquipamento tipo) {
         if (!slotsEquipaveis.containsKey(tipo)) {
             System.out.println("Nenhum item equipado no slot " + tipo + ".");
@@ -54,20 +55,20 @@ public class Inventario {
 
         ItemEquipavel item = slotsEquipaveis.remove(tipo);
         item.desequipar();
-        bau.add(item);
+        inventario.add(item);
 
-        System.out.println(item.getNome() + " desequipado e colocado no baú.");
+        System.out.println(item.getNome() + " desequipado e colocado no inventário.");
         return true;
     }
 
-    // Lista todos os itens do baú
-    public void listarItensBau() {
-        System.out.println("Itens no baú:");
-        if (bau.isEmpty()) {
-            System.out.println("  (baú vazio)");
+    // Lista todos os itens do inventário
+    public void listarItensInventario() {
+        System.out.println("Itens no inventario:");
+        if (inventario.isEmpty()) {
+            System.out.println("  (Inventario vazio)");
             return;
         }
-        for (Item item : bau) {
+        for (Item item : inventario) {
             System.out.println(" - " + item.getNome() + " (x" + item.getQuantidade() + ")");
         }
     }

@@ -118,35 +118,43 @@ public class Main {
 
         // Criar alguns itens equipáveis
         ItemEquipavel capacete = ItemEquipavel.CAPACETE_FERRO;
+        ItemEquipavel capacete2 = ItemEquipavel.CAPACETE_OURO;
         ItemEquipavel peitoral = ItemEquipavel.PEITORAL_AÇO;
         ItemEquipavel espada = ItemEquipavel.ESPADA_FLAMEJANTE;
 
-        // Adicionar no baú
-        inv.adicionarNoBau(capacete);
-        inv.adicionarNoBau(peitoral);
-        inv.adicionarNoBau(espada);
+        // Adicionar no inventário
+        inv.adicionarNoInventario(capacete);
+        inv.adicionarNoInventario(capacete2);
+        inv.adicionarNoInventario(peitoral);
+        inv.adicionarNoInventario(espada);
 
-        inv.listarItensBau();
         inv.listarItensEquipados();
+        inv.listarItensInventario();
 
         System.out.println("\nEquipando capacete e espada...");
         inv.equiparItem(capacete);
         inv.equiparItem(espada);
 
-        inv.listarItensBau();
         inv.listarItensEquipados();
+        inv.listarItensInventario();
+
+        System.out.println("\nTentando equipar capacete2 (já há um capacete equipado)...");
+        inv.equiparItem(capacete2);
+
+        inv.listarItensEquipados();
+        inv.listarItensInventario();
 
         System.out.println("\nTentando equipar peitoral (slot livre)...");
         inv.equiparItem(peitoral);
 
-        inv.listarItensBau();
         inv.listarItensEquipados();
+        inv.listarItensInventario();
 
         System.out.println("\nDesequipando capacete...");
         inv.desequiparItem(ItemEquipavel.TipoEquipamento.CAPACETE);
 
-        inv.listarItensBau();
         inv.listarItensEquipados();
+        inv.listarItensInventario();
 
     }
 

@@ -50,6 +50,12 @@ public class ItemEquipavel extends Item {
             0, 5, 0, 0, 0
     );
 
+    public static final ItemEquipavel CAPACETE_OURO = new ItemEquipavel(
+            "Capacete de Ouro", "Um capacete resistente de ferro", 1, "",
+            TipoEquipamento.CAPACETE,
+            0, 5, 0, 0, 0
+    );
+
     public static final ItemEquipavel PEITORAL_AÇO = new ItemEquipavel(
             "Peitoral de Aço", "Proteção robusta para o torso", 1, "",
             TipoEquipamento.PEITORAL,
