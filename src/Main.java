@@ -102,19 +102,9 @@ public class Main {
         SistemaCombateTurnos combate = new SistemaCombateTurnos();
         combate.batalhar(p1, goblin);
 
-        //Exemplo de Item Equipavel
-        ItemEquipavel capacete1 = ItemEquipavel.CAPACETE_FERRO;
-
-        System.out.println("Antes de equipar:");
-        System.out.println(capacete1.exibirInfoEquipamento());
-
-        capacete1.equipar();
-
-        System.out.println("\nApós equipar:");
-        System.out.println(capacete1.exibirInfoEquipamento());
-
-
+        //Criando inventário
         Inventario inv = new Inventario();
+        p1.inventario = inv;
 
         // Criar alguns itens equipáveis
         ItemEquipavel capacete = ItemEquipavel.CAPACETE_FERRO;
@@ -127,35 +117,32 @@ public class Main {
         inv.adicionarNoInventario(capacete2);
         inv.adicionarNoInventario(peitoral);
         inv.adicionarNoInventario(espada);
+        inv.adicionarNoInventario(peitoral);
 
-        inv.listarItensEquipados();
-        inv.listarItensInventario();
+
+        p1.exibirStatus();
+
 
         System.out.println("\nEquipando capacete e espada...");
-        inv.equiparItem(capacete);
-        inv.equiparItem(espada);
+        p1.equiparItem(capacete);
+        p1.equiparItem(espada);
 
-        inv.listarItensEquipados();
-        inv.listarItensInventario();
+        p1.exibirStatus();
 
         System.out.println("\nTentando equipar capacete2 (já há um capacete equipado)...");
-        inv.equiparItem(capacete2);
+        p1.equiparItem(capacete2);
 
-        inv.listarItensEquipados();
-        inv.listarItensInventario();
 
         System.out.println("\nTentando equipar peitoral (slot livre)...");
-        inv.equiparItem(peitoral);
+        p1.equiparItem(peitoral);
+
+
 
         inv.listarItensEquipados();
         inv.listarItensInventario();
 
-        System.out.println("\nDesequipando capacete...");
-        inv.desequiparItem(ItemEquipavel.TipoEquipamento.CAPACETE);
 
-        inv.listarItensEquipados();
-        inv.listarItensInventario();
-
+        p1.exibirStatus();
     }
 
     // Pausa para narrativa

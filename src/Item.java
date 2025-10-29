@@ -1,13 +1,13 @@
 public class Item {
     private String nome;
     private String descricao;
-    private int quantidade;
+    private int quantidade = 1;
     private String efeito;
 
-    public Item(String nome, String descricao, int quantidade, String efeito) {
+    public Item(String nome, String descricao, String efeito) {
         this.nome = nome;
         this.descricao = descricao;
-        this.quantidade = quantidade;
+        this.quantidade = 1;
         this.efeito = efeito;
     }
 
@@ -24,6 +24,7 @@ public class Item {
     }
 
     public void setQuantidade(int quantidade) {
+
         this.quantidade = quantidade;
     }
 
@@ -38,5 +39,16 @@ public class Item {
     @Override
     public String toString() {
         return nome + ": " + descricao + " | Quantidade: " + quantidade + " | Efeito: " + efeito;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj==this) return true;
+        if (obj==null) return false;
+        if (obj.getClass()!=this.getClass()) return false;
+        Item d=(Item)obj;
+        if (this.nome != d.nome || this.descricao != d.descricao || this.efeito != d.efeito) return false;
+
+        return true;
     }
 }

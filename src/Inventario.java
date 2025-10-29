@@ -1,8 +1,9 @@
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
+import java.util.Objects;
 
-public class Inventario {
+public class Inventario implements Cloneable {
 
     // Mapa que relaciona cada tipo de equipamento com o item equipado
     private EnumMap<ItemEquipavel.TipoEquipamento, ItemEquipavel> slotsEquipaveis;
@@ -16,41 +17,48 @@ public class Inventario {
     }
 
     public void adicionarNoInventario(Item item) {
+
+        for (Item itemInv: inventario){
+            if (itemInv.equals(item)){
+                itemInv.setQuantidade(itemInv.getQuantidade() + 1);
+
+                return;
+            }
+        }
         inventario.add(item);
         System.out.println(item.getNome() + " adicionado ao inventário.");
     }
 
     // Tenta equipar um item que está no inventário (deve ser ItemEquipavel)
-    public boolean equiparItem(ItemEquipavel item) {
+    public ItemEquipavel equiparItem(ItemEquipavel item) {
         ItemEquipavel.TipoEquipamento tipo = item.getTipo();
 
         if (!inventario.contains(item)) {
             System.out.println("Item não está no inventário.");
-            return false;
+            return null;
         }
 
-        // Se já existe um item equipado nesse slot, desequipa e coloca no inventário
-        if (slotsEquipaveis.containsKey(tipo)) {
-            ItemEquipavel itemAntigo = slotsEquipaveis.get(tipo);
+        // Se já existe um item equipado nesse slot, desequipa e coloca de volta no inventário
+        ItemEquipavel itemAntigo = slotsEquipaveis.put(tipo, item);
+        if (itemAntigo != null) {
             itemAntigo.desequipar();
             inventario.add(itemAntigo);
-            System.out.println(itemAntigo.getNome() + " foi removido do slot " + tipo + " e devolvido ao inventário.");
+            System.out.println(itemAntigo.getNome() + " foi removido do slot " + tipo + ".");
         }
 
-        // Remove o novo item do inventário e equipa
+        // Remove do inventário e equipa
         inventario.remove(item);
-        slotsEquipaveis.put(tipo, item);
         item.equipar();
 
         System.out.println(item.getNome() + " equipado no slot " + tipo + ".");
-        return true;
+        return itemAntigo; // retorna o item antigo (pode ser null)
     }
 
     // Desequipa item do slot e coloca no inventário
-    public boolean desequiparItem(ItemEquipavel.TipoEquipamento tipo) {
+    public ItemEquipavel desequiparItem(ItemEquipavel.TipoEquipamento tipo) {
         if (!slotsEquipaveis.containsKey(tipo)) {
             System.out.println("Nenhum item equipado no slot " + tipo + ".");
-            return false;
+            return null;
         }
 
         ItemEquipavel item = slotsEquipaveis.remove(tipo);
@@ -58,9 +66,8 @@ public class Inventario {
         inventario.add(item);
 
         System.out.println(item.getNome() + " desequipado e colocado no inventário.");
-        return true;
+        return item;
     }
-
     // Lista todos os itens do inventário
     public void listarItensInventario() {
         System.out.println("Itens no inventario:");
@@ -89,4 +96,15 @@ public class Inventario {
             }
         }
     }
+
+    @Override
+    public Object clone() {
+        Inventario ret = null;
+        try {
+            ret = new Inventario();
+        } catch (Exception erro) {}
+        return ret;
+    }
+
+
 }

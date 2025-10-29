@@ -11,11 +11,11 @@ public class ItemEquipavel extends Item {
     private int bonusStamina;
     private boolean equipado;
 
-    public ItemEquipavel(String nome, String descricao, int quantidade, String efeito,
+    public ItemEquipavel(String nome, String descricao, String efeito,
                          TipoEquipamento tipo,
                          int bonusAtaque, int bonusDefesa, int bonusVidaMaxima,
                          int bonusMana, int bonusStamina) {
-        super(nome, descricao, quantidade, efeito);
+        super(nome, descricao, efeito);
         this.tipo = tipo;
         this.bonusAtaque = bonusAtaque;
         this.bonusDefesa = bonusDefesa;
@@ -45,37 +45,37 @@ public class ItemEquipavel extends Item {
 
     // Itens pré setados
     public static final ItemEquipavel CAPACETE_FERRO = new ItemEquipavel(
-            "Capacete de Ferro", "Um capacete resistente de ferro", 1, "",
+            "Capacete de Ferro", "Um capacete resistente de ferro", "",
             TipoEquipamento.CAPACETE,
             0, 5, 0, 0, 0
     );
 
     public static final ItemEquipavel CAPACETE_OURO = new ItemEquipavel(
-            "Capacete de Ouro", "Um capacete resistente de ferro", 1, "",
+            "Capacete de Ouro", "Um capacete resistente de ferro", "",
             TipoEquipamento.CAPACETE,
             0, 5, 0, 0, 0
     );
 
     public static final ItemEquipavel PEITORAL_AÇO = new ItemEquipavel(
-            "Peitoral de Aço", "Proteção robusta para o torso", 1, "",
+            "Peitoral de Aço", "Proteção robusta para o torso", "",
             TipoEquipamento.PEITORAL,
             0, 15, 50, 0, 10
     );
 
     public static final ItemEquipavel CALCA_COURO = new ItemEquipavel(
-            "Calça de Couro", "Calça leve e confortável", 1, "",
+            "Calça de Couro", "Calça leve e confortável", "",
             TipoEquipamento.CALCA,
             0, 5, 10, 0, 5
     );
 
     public static final ItemEquipavel BOTA_DE_VELOCIDADE = new ItemEquipavel(
-            "Bota de Velocidade", "Aumenta a agilidade e stamina", 1, "",
+            "Bota de Velocidade", "Aumenta a agilidade e stamina", "",
             TipoEquipamento.BOTA,
             0, 3, 0, 0, 15
     );
 
     public static final ItemEquipavel ESPADA_FLAMEJANTE = new ItemEquipavel(
-            "Espada Flamejante", "Uma espada com poder de fogo", 1, "",
+            "Espada Flamejante", "Uma espada com poder de fogo", "",
             TipoEquipamento.ARMA,
             20, 0, 0, 0, 0
     );

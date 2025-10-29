@@ -9,7 +9,9 @@ public class Personagem {
     protected int vidaMaxima;
     protected int vidaAtual;
     protected int manaAtual;
+    protected int manaMaxima;
     protected int staminaAtual;
+    protected int staminaMaxima;
 
     protected int nivel;
     protected int experienciaAtual;
@@ -28,10 +30,12 @@ public class Personagem {
         this.vidaMaxima = classe.getBaseVida() + raca.getBonusVida();
         this.ataque = classe.getBaseAtaque() + raca.getBonusAtaque();
         this.defesa = classe.getBaseDefesa() + raca.getBonusDefesa();
-        this.manaAtual = classe.getBaseMana() + raca.getBonusMana();
-        this.staminaAtual = classe.getBaseStamina() + raca.getBonusStamina();
+        this.manaMaxima = classe.getBaseMana() + raca.getBonusMana();
+        this.staminaMaxima = classe.getBaseStamina() + raca.getBonusStamina();
 
         this.vidaAtual = vidaMaxima;
+        this.manaAtual = manaMaxima;
+        this.staminaAtual = staminaMaxima;
 
         this.nivel = 1;
         this.experienciaAtual = 0;
@@ -117,5 +121,55 @@ public class Personagem {
         System.out.println("Defesa: " + defesa);
         System.out.println("================================\n");
     }
+
+    public void equiparItem(ItemEquipavel item) {
+        ItemEquipavel antigo = inventario.equiparItem(item);
+
+        // Se havia um item antigo, remover seus bônus
+        if (antigo != null) {
+            removerBonus(antigo);
+        }
+
+        // Aplicar os bônus do novo item
+        aplicarBonus(item);
+    }
+
+    public void desequiparItem(ItemEquipavel.TipoEquipamento tipo) {
+        ItemEquipavel removido = inventario.desequiparItem(tipo);
+        if (removido != null) {
+            removerBonus(removido);
+        }
+    }
+
+    private void aplicarBonus(ItemEquipavel item) {
+        this.ataque += item.getBonusAtaque();
+        this.defesa += item.getBonusDefesa();
+        this.vidaMaxima += item.getBonusVidaMaxima();
+        this.manaMaxima += item.getBonusMana();
+        this.staminaMaxima += item.getBonusStamina();
+
+        // Opcional: curar a vida/mana/stamina ao equipar
+        this.vidaAtual = Math.min(this.vidaAtual, this.vidaMaxima);
+        this.manaAtual = Math.min(this.manaAtual, this.manaMaxima);
+        this.staminaAtual = Math.min(this.staminaAtual, this.staminaMaxima);
+
+        System.out.println(item.getNome() + " concedeu bônus ao personagem!");
+    }
+
+    private void removerBonus(ItemEquipavel item) {
+        this.ataque -= item.getBonusAtaque();
+        this.defesa -= item.getBonusDefesa();
+        this.vidaMaxima -= item.getBonusVidaMaxima();
+        this.manaMaxima -= item.getBonusMana();
+        this.staminaMaxima -= item.getBonusStamina();
+
+        if (vidaAtual > vidaMaxima) vidaAtual = vidaMaxima;
+        if (manaAtual > manaMaxima) manaAtual = manaMaxima;
+        if (staminaAtual > staminaMaxima) staminaAtual = staminaMaxima;
+
+        System.out.println(item.getNome() + " teve seus bônus removidos.");
+    }
+
+
 
 }
