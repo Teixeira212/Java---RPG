@@ -1,3 +1,5 @@
+import Classes.Classe;
+
 public class Personagem {
     protected String nome;
     protected Inventario inventario;

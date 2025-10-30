@@ -1,3 +1,10 @@
+import Classes.Classe;
+import Classes.Guerreiro;
+import Classes.Mago;
+import Classes.Arqueiro;
+import Classes.Ladino;
+import Classes.Paladino;
+
 public class SubClasseInimigo extends Personagem {
 
     private int experienciaDrop;
@@ -38,22 +45,22 @@ public class SubClasseInimigo extends Personagem {
     }
 
     public static SubClasseInimigo GOBLIN() throws Exception {
-        return new SubClasseInimigo("Goblin", Raca.ORC(), Classe.LADINO(), 3, 50);
+        return new SubClasseInimigo("Goblin", Raca.ORC(), new Ladino(), 3, 50);
     }
 
     public static SubClasseInimigo ESQUELETO() throws Exception {
-        return new SubClasseInimigo("Esqueleto", Raca.HUMANO(), Classe.GUERREIRO(), 3, 75);
+        return new SubClasseInimigo("Esqueleto", Raca.HUMANO(), new Guerreiro(), 3, 75);
     }
 
     public static SubClasseInimigo MAGO_NEGRO() throws Exception {
-        return new SubClasseInimigo("Mago Negro", Raca.ELFO(), Classe.MAGO(), 4, 100);
+        return new SubClasseInimigo("Mago Negro", Raca.ELFO(), new Mago(), 4, 100);
     }
 
     public static SubClasseInimigo ORC_BRUTO() throws Exception {
-        return new SubClasseInimigo("Orc Bruto", Raca.ORC(), Classe.GUERREIRO(), 5, 150);
+        return new SubClasseInimigo("Orc Bruto", Raca.ORC(), new Guerreiro(), 5, 150);
     }
 
     public static SubClasseInimigo DEMONIO_MENOR() throws Exception {
-        return new SubClasseInimigo("Demônio Menor", Raca.ANAO(), Classe.PALADINO(), 6, 200);
+        return new SubClasseInimigo("Demônio Menor", Raca.ANAO(), new Paladino(), 6, 200);
     }
 }

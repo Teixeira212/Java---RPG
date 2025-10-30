@@ -1,3 +1,10 @@
+import Classes.Classe;
+import Classes.Guerreiro;
+import Classes.Mago;
+import Classes.Arqueiro;
+import Classes.Ladino;
+import Classes.Paladino;
+
 import java.io.*;
 
 public class Main {
@@ -69,7 +76,7 @@ public class Main {
         // Escolha de classe
         System.out.println("\n=== Escolha sua classe ===");
         System.out.println("1 - Guerreiro");
-        System.out.println("2 - Mago");
+        System.out.println("2 - Classes.Mago");
         System.out.println("3 - Arqueiro");
         System.out.println("4 - Ladino");
         System.out.println("5 - Paladino");
@@ -78,16 +85,17 @@ public class Main {
 
         Classe classeEscolhida;
         switch (opcClasse) {
-            case 1 -> classeEscolhida = Classe.GUERREIRO();
-            case 2 -> classeEscolhida = Classe.MAGO();
-            case 3 -> classeEscolhida = Classe.ARQUEIRO();
-            case 4 -> classeEscolhida = Classe.LADINO();
-            case 5 -> classeEscolhida = Classe.PALADINO();
+            case 1 -> classeEscolhida = new Guerreiro();
+            case 2 -> classeEscolhida = new Mago();
+            case 3 -> classeEscolhida = new Arqueiro();
+            case 4 -> classeEscolhida = new Ladino();
+            case 5 -> classeEscolhida = new Paladino();
             default -> {
                 System.out.println("Opção inválida! Selecionado Guerreiro por padrão.");
-                classeEscolhida = Classe.GUERREIRO();
+                classeEscolhida = new Guerreiro();
             }
         }
+
 
         // Criação do personagem
         Personagem p1 = new Personagem(nome, racaEscolhida, classeEscolhida);
