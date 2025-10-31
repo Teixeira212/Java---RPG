@@ -20,7 +20,7 @@ public class Main {
         pause(2000);
         System.out.println("Cada chama representava uma virtude: coragem, sabedoria, lealdade, justiça, honra, fé e poder.");
         pause(3000);
-        System.out.println("Mas quando o último dragão tombou, as chamas se apagaram… e com elas veio a guerra.\n");
+        System.out.println("Mas quando o último dragão tombou, as chamas se apagaram… e com elas veio a guerra. \n");
         pause(3000);
         System.out.println("Você nasceu nas Terras de Cinábria, o menor e mais esquecido dos sete reinos.");
         pause(2500);
