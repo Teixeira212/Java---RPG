@@ -10,13 +10,13 @@ import java.io.*;
 public class Main {
     public static void main(String[] args) throws Exception {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        /*
+
         // Introdução narrativa
         System.out.println("🔥 Introdução: O Herdeiro da Oitava Chama\n");
         pause(2000);
         System.out.println("O vento das montanhas ainda traz o cheiro de cinzas antigas.");
         pause(2000);
-        System.out.println("Séculos atrás, o Reino das Sete Chamas era uma terra unida — sete tronos governando sob o juramento dos dragões.");
+        System.out.println("Séculos atrás, o Reino das Sete Chamas era uma terra unida, sete tronos governando sob o juramento dos dragões.");
         pause(2000);
         System.out.println("Cada chama representava uma virtude: coragem, sabedoria, lealdade, justiça, honra, fé e poder.");
         pause(3000);
@@ -36,14 +36,14 @@ public class Main {
         pause(2500);
         System.out.println("E aqueles que forem capazes de encontrá-los terão uma chance de mudar o destino de todos os povos.\n");
         pause(3000);
-        System.out.println("Movido por coragem — ou talvez por um chamado que não consegue explicar —, você parte em jornada.");
+        System.out.println("Movido por coragem, ou talvez por um chamado que não consegue explicar, você parte em jornada.");
         pause(2000);
         System.out.println("Seu objetivo é descobrir quem realmente é, enfrentar perigos inimagináveis e tentar reunir os fragmentos antes que o mundo seja consumido pelo fogo da guerra.");
         pause(3000);
         System.out.println("No coração do continente, entre cinzas, traições e antigas profecias,");
         pause(2000);
         System.out.println("você deve escolher: reunir os fragmentos e reacender as Sete Chamas… ou deixar que o mundo queime de vez.\n");
-        pause(3000);*/
+        pause(3000);
 
         // Escolha do nome
         System.out.print("Antes de partir, diga-nos seu nome, herói: ");
@@ -76,7 +76,7 @@ public class Main {
         // Escolha de classe
         System.out.println("\n=== Escolha sua classe ===");
         System.out.println("1 - Guerreiro");
-        System.out.println("2 - Classes.Mago");
+        System.out.println("2 - Mago");
         System.out.println("3 - Arqueiro");
         System.out.println("4 - Ladino");
         System.out.println("5 - Paladino");
