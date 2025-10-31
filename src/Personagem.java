@@ -56,6 +56,14 @@ public class Personagem {
     public int getVidaMaxima() { return vidaMaxima; }
     public int getNivel() { return nivel; }
 
+    public void setVidaAtual(int vidaAtual) {
+        this.vidaAtual = Math.max(0, Math.min(vidaAtual, this.vidaMaxima));
+    }
+
+    public void setManaAtual(int manaAtual) {
+        this.manaAtual = Math.max(0, Math.min(manaAtual, this.manaMaxima));
+    }
+
     //EXPERIENCIA
     private int calcularExperienciaNecessaria() {
         return 100 * nivel;
@@ -78,10 +86,11 @@ public class Personagem {
         vidaMaxima = (classe.getBaseVida() + raca.getBonusVida()) * nivel;
         ataque = (classe.getBaseAtaque() + raca.getBonusAtaque()) * nivel;
         defesa = (classe.getBaseDefesa() + raca.getBonusDefesa()) * nivel;
-        manaAtual = (classe.getBaseMana() + raca.getBonusMana()) * nivel;
+        manaMaxima = (classe.getBaseMana() + raca.getBonusMana()) * nivel;
         staminaAtual = (classe.getBaseStamina() + raca.getBonusStamina()) * nivel;
 
-        vidaAtual = vidaMaxima; // restaura vida ao subir de nível
+        vidaAtual = vidaMaxima;
+        manaAtual = manaMaxima;
 
         System.out.println(nome + " subiu para o nível " + nivel + "!");
     }
@@ -117,7 +126,7 @@ public class Personagem {
         System.out.println("XP: " + experienciaAtual + "/" + experienciaNecessaria);
         System.out.println("--------------------------------");
         System.out.println("Vida: " + vidaAtual + "/" + vidaMaxima);
-        System.out.println("Mana: " + manaAtual);
+        System.out.println("Mana: " + manaAtual + "/" + manaMaxima);
         System.out.println("Stamina: " + staminaAtual);
         System.out.println("Ataque: " + ataque);
         System.out.println("Defesa: " + defesa);
@@ -172,6 +181,58 @@ public class Personagem {
         System.out.println(item.getNome() + " teve seus bônus removidos.");
     }
 
+    public void usarItem(Item item) {
+        if (item.getQuantidade() <= 0) {
+            System.out.println("Você não tem mais " + item.getNome() + "!");
+            return;
+        }
 
+        System.out.println(nome + " usou " + item.getNome() + "!");
 
+        switch (item.getEfeito().toLowerCase()) {
+            case "cura":
+            case "poção de cura":
+                curar(50); // recupera 50 pontos de vida
+                break;
+
+            case "mana":
+            case "poção de mana":
+                restaurarMana(30); // recupera 30 de mana
+                break;
+
+            default:
+                System.out.println("O item " + item.getNome() + " não tem um efeito conhecido.");
+        }
+
+        item.setQuantidade(item.getQuantidade() - 1);
+
+        if (item.getQuantidade() == 0) {
+            System.out.println(item.getNome() + " acabou!");
+        }
+    }
+
+    public void curar(int pontos) {
+        if (vidaAtual == vidaMaxima) {
+            System.out.println(nome + " já está com a vida cheia!");
+            return;
+        }
+        int vidaAntes = vidaAtual;
+        vidaAtual = Math.min(vidaAtual + pontos, vidaMaxima);
+        int curado = vidaAtual - vidaAntes;
+        System.out.println(nome + " recuperou " + curado + " pontos de vida! (" + vidaAtual + "/" + vidaMaxima + ")");
+    };
+
+    public void restaurarMana(int pontos) {
+        if (manaAtual == manaMaxima) {
+            System.out.println(nome + " já está com a mana cheia!");
+            return;
+        }
+        int manaAntes = manaAtual;
+        manaAtual = Math.min(manaAtual + pontos, manaMaxima);
+        int recuperado = manaAtual - manaAntes;
+        System.out.println(nome + " recuperou " + recuperado + " pontos de mana! (" + manaAtual + "/" + manaMaxima + ")");
+    }
 }
+
+
+

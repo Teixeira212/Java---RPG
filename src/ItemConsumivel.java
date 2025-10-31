@@ -4,17 +4,25 @@ public class ItemConsumivel extends Item{
         super(nome, descricao, efeito);
     }
 
-    // Usar o item e reduzir sua quantidade
-    public void usar(Personagem p) {
-        if (getQuantidade() > 0) {
-            setQuantidade(getQuantidade() - 1);
-            System.out.println("Você usou " + getNome() + "! " + getEfeito());
+    // Poção de Cura — recupera vida
+    public static ItemConsumivel POCAO_CURA() {
+        ItemConsumivel pocaoCura = new ItemConsumivel(
+                "Poção de Cura",
+                "Uma poção mágica que restaura 50 pontos de vida.",
+                "cura"
+        );
+        pocaoCura.setQuantidade(1);
+        return pocaoCura;
+    }
 
-            if (getQuantidade() == 0) {
-                System.out.println(getNome() + " acabou!");
-            }
-        } else {
-            System.out.println("Você não tem mais " + getNome() + "!");
-        }
+    // Poção de Mana — recupera mana
+    public static ItemConsumivel POCAO_MANA() {
+        ItemConsumivel pocaoMana = new ItemConsumivel(
+                "Poção de Mana",
+                "Uma poção energética que restaura 30 pontos de mana.",
+                "mana"
+        );
+        pocaoMana.setQuantidade(1);
+        return pocaoMana;
     }
 }

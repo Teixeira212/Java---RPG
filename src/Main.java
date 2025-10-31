@@ -10,7 +10,7 @@ import java.io.*;
 public class Main {
     public static void main(String[] args) throws Exception {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-
+        /*
         // Introdução narrativa
         System.out.println("🔥 Introdução: O Herdeiro da Oitava Chama\n");
         pause(2000);
@@ -44,7 +44,7 @@ public class Main {
         pause(2000);
         System.out.println("você deve escolher: reunir os fragmentos e reacender as Sete Chamas… ou deixar que o mundo queime de vez.\n");
         pause(3000);
-
+        */
         // Escolha do nome
         System.out.print("Antes de partir, diga-nos seu nome, herói: ");
         String nome = reader.readLine();
@@ -113,6 +113,7 @@ public class Main {
         //Criando inventário
         Inventario inv = new Inventario();
         p1.inventario = inv;
+        /*
 
         // Criar alguns itens equipáveis
         ItemEquipavel capacete = ItemEquipavel.CAPACETE_FERRO;
@@ -143,14 +144,30 @@ public class Main {
 
         System.out.println("\nTentando equipar peitoral (slot livre)...");
         p1.equiparItem(peitoral);
+        */
 
+        ItemConsumivel PocaoDeCura = ItemConsumivel.POCAO_CURA();
+        ItemConsumivel PocaoDeMana = ItemConsumivel.POCAO_MANA();
+
+        inv.adicionarNoInventario(PocaoDeCura);
+        inv.adicionarNoInventario(PocaoDeMana);
+
+        p1.setVidaAtual(20);
+        p1.setManaAtual(0);
+        p1.exibirStatus();
 
 
         inv.listarItensEquipados();
         inv.listarItensInventario();
 
 
+        p1.usarItem(PocaoDeCura);
+        p1.usarItem(PocaoDeMana);
+
         p1.exibirStatus();
+
+        inv.listarItensEquipados();
+        inv.listarItensInventario();
     }
 
     // Pausa para narrativa
