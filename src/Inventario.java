@@ -12,43 +12,6 @@ public class Inventario implements Cloneable, Comparable<Inventario> {
         inventario = new ArrayList<>();
     }
 
-    // Construtor de cópia (deep copy)
-    public Inventario(Inventario modelo) throws Exception {
-        if (modelo == null) throw new Exception("Modelo ausente");
-
-        // Clonando slots equipáveis
-        this.slotsEquipaveis = new EnumMap<>(ItemEquipavel.TipoEquipamento.class);
-        if (modelo.slotsEquipaveis != null) {
-            for (ItemEquipavel.TipoEquipamento tipo : ItemEquipavel.TipoEquipamento.values()) {
-                ItemEquipavel item = modelo.slotsEquipaveis.get(tipo);
-                if (item != null) {
-                    // Clonagem profunda (ItemEquipavel precisa implementar Cloneable)
-                    this.slotsEquipaveis.put(tipo, (ItemEquipavel) item.clone());
-                }
-            }
-        }
-
-        // Clonando itens do inventário
-        this.inventario = new ArrayList<>();
-        if (modelo.inventario != null) {
-            for (Item item : modelo.inventario) {
-                if (item != null) {
-                    this.inventario.add((Item) item.clone());
-                }
-            }
-        }
-    }
-
-    // Deep copy usando clone()
-    @Override
-    public Object clone() {
-        try {
-            return new Inventario(this);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
 
     // Métodos existentes permanecem iguais
     public void adicionarNoInventario(Item item) {
@@ -193,6 +156,44 @@ public class Inventario implements Cloneable, Comparable<Inventario> {
             if (cmp != 0) return cmp < 0 ? -666 : 666;
         }
         return 0;
+    }
+
+    // Construtor de cópia (deep copy)
+    public Inventario(Inventario modelo) throws Exception {
+        if (modelo == null) throw new Exception("Modelo ausente");
+
+        // Clonando slots equipáveis
+        this.slotsEquipaveis = new EnumMap<>(ItemEquipavel.TipoEquipamento.class);
+        if (modelo.slotsEquipaveis != null) {
+            for (ItemEquipavel.TipoEquipamento tipo : ItemEquipavel.TipoEquipamento.values()) {
+                ItemEquipavel item = modelo.slotsEquipaveis.get(tipo);
+                if (item != null) {
+                    // Clonagem profunda (ItemEquipavel precisa implementar Cloneable)
+                    this.slotsEquipaveis.put(tipo, (ItemEquipavel) item.clone());
+                }
+            }
+        }
+
+        // Clonando itens do inventário
+        this.inventario = new ArrayList<>();
+        if (modelo.inventario != null) {
+            for (Item item : modelo.inventario) {
+                if (item != null) {
+                    this.inventario.add((Item) item.clone());
+                }
+            }
+        }
+    }
+
+    // Deep copy usando clone()
+    @Override
+    public Object clone() {
+        try {
+            return new Inventario(this);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
 }

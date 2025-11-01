@@ -12,7 +12,7 @@ public class Jogo {
 
 
         // Introdução narrativa
-        System.out.println("🔥 Introdução: O Herdeiro da Oitava Chama\n");
+        /*System.out.println("🔥 Introdução: O Herdeiro da Oitava Chama\n");
         pause(2000);
         System.out.println("O vento das montanhas ainda traz o cheiro de cinzas antigas.");
         pause(2000);
@@ -43,7 +43,7 @@ public class Jogo {
         System.out.println("No coração do continente, entre cinzas, traições e antigas profecias,");
         pause(2000);
         System.out.println("você deve escolher: reunir os fragmentos e reacender as Sete Chamas… ou deixar que o mundo queime de vez.\n");
-        pause(3000);
+        pause(3000);*/
 
         // Escolha do nome
         System.out.print("Antes de partir, diga-nos seu nome, herói: ");
@@ -146,42 +146,50 @@ public class Jogo {
         SistemaCombateTurnos combate1 = new SistemaCombateTurnos();
         SistemaCombateTurnos combate2 = new SistemaCombateTurnos();
         SistemaCombateTurnos combate3 = new SistemaCombateTurnos();
-
         combate1.explicarRegras(p1, goblin);
-        combate1.batalhar(p1, goblin);
+        boolean f = combate1.batalhar(p1, goblin);
 
-        // Drop de arma baseado na classe do jogador
-        Classe classeJogador = p1.getClasse();
-        ItemEquipavel drop = null;
+        if(f == false){
+            // Drop de arma baseado na classe do jogador
+            Classe classeJogador = p1.getClasse();
+            ItemEquipavel drop = null;
 
-        if (classeJogador instanceof Guerreiro) {
-            drop = espadaDeFerro;
-        } else if (classeJogador instanceof Mago) {
-            drop = cajadoSimples;
-        } else if (classeJogador instanceof Arqueiro) {
-            drop = arcoDeMadeira;
-        } else if (classeJogador instanceof Ladino) {
-            drop = adagaDeFerro;
-        } else if (classeJogador instanceof Paladino) {
-            drop = clavaDeFerro;
+            if (classeJogador instanceof Guerreiro) {
+                drop = espadaDeFerro;
+            } else if (classeJogador instanceof Mago) {
+                drop = cajadoSimples;
+            } else if (classeJogador instanceof Arqueiro) {
+                drop = arcoDeMadeira;
+            } else if (classeJogador instanceof Ladino) {
+                drop = adagaDeFerro;
+            } else if (classeJogador instanceof Paladino) {
+                drop = clavaDeFerro;
+            }
+
+            if (drop != null) {
+                System.out.println("\nO goblin dropou: " + drop.getNome() + "!");
+                p1.inventario.adicionarNoInventario(drop);
+            }
+
+            System.out.println("\nO goblin dropou: " + peitoralDeFerro.getNome() + "!");
+            p1.inventario.adicionarNoInventario(peitoralDeFerro);
+
+            System.out.println("\nO goblin dropou: " + capaceteDeCouro.getNome() + "!");
+            p1.inventario.adicionarNoInventario(capaceteDeCouro);
+
+            System.out.println("\n======================================================================== ");
+            System.out.println("Parabéns por derrotar o goblin, agora equipe os itens que você ganhou!!! ");
+            System.out.println("======================================================================== ");
         }
 
-        if (drop != null) {
-            System.out.println("\nO goblin dropou: " + drop.getNome() + "!");
-            p1.inventario.adicionarNoInventario(drop);
-        }
-
-        System.out.println("\nO goblin dropou: " + peitoralDeFerro.getNome() + "!");
-        p1.inventario.adicionarNoInventario(peitoralDeFerro);
-
-        System.out.println("\nO goblin dropou: " + capaceteDeCouro.getNome() + "!");
-        p1.inventario.adicionarNoInventario(capaceteDeCouro);
-
-        System.out.println("\n======================================================================== ");
-        System.out.println("Parabéns por derrotar o goblin, agora equipe os itens que você ganhou!!! ");
-        System.out.println("======================================================================== ");
+        Personagem savePoint = new Personagem(p1);
+        System.out.println("\n💾 Ponto de controle salvo! Se você cair em batalha, voltará a este estado.\n");
 
         menuPrincipal(p1);
+
+        boolean v = false;
+
+
 
         System.out.println("\nVocê decide explorar os arredores...");
         Thread.sleep(1000);
@@ -192,96 +200,147 @@ public class Jogo {
         System.out.println("À direita, você vê uma trilha que leva até uma colina rochosa.");
         Thread.sleep(1000);
 
+        while (!v){
+            byte escolha = 0;
+            while (escolha != 1 && escolha != 2) {
+                System.out.println("\nO que você deseja fazer?");
+                System.out.println("1 - Seguir pela esquerda");
+                System.out.println("2 - Seguir pela direita");
+                System.out.print("Escolha: ");
 
-        byte escolha = 0;
-        while (escolha != 1 && escolha != 2) {
-            System.out.println("\nO que você deseja fazer?");
-            System.out.println("1 - Seguir pela esquerda");
-            System.out.println("2 - Seguir pela direita");
-            System.out.print("Escolha: ");
-
-            try{
-                escolha = Teclado.getUmByte();
-            }catch(Exception e){
-                escolha = -1;
-            }
-
-            try {
-                if(escolha == -1){
-                    System.out.println("Opção invalida, tente novamente!");
-                    continue;
+                try{
+                    escolha = Teclado.getUmByte();
+                }catch(Exception e){
+                    escolha = -1;
                 }
 
-                if (escolha == 1) {
-                    System.out.println("\nVocê segue pela esquerda...");
-                    Thread.sleep(1000);
-                    System.out.println("De repente, o chão cede sob seus pés!");
-                    Thread.sleep(1000);
-                    System.out.println("Você caiu em uma armadilha! Perde alguns pontos de vida.");
-                    p1.setVidaAtual(p1.getVidaAtual() - 20);
-                    Thread.sleep(1000);
-                    System.out.println("\nVocê se levanta com dificuldade, ainda sentindo a dor da queda...");
-                    Thread.sleep(1000);
-                    System.out.println("Ao olhar ao redor, percebe que caiu em uma antiga masmorra subterrânea.");
-                    Thread.sleep(1000);
-                    System.out.println("Do fundo do corredor, você ouve o som de ossos se movendo...");
-                    Thread.sleep(1000);
-                    System.out.println("Um Esqueleto!!!");
-                    Thread.sleep(1000);
-                    combate2.batalhar(p1, esqueleto);
-                    System.out.println("\nO Esqueleto dropou: 4x - " + PocaoDeCura.getNome() + "!");
-                    p1.inventario.adicionarNoInventario(PocaoDeCura);
-                    p1.inventario.adicionarNoInventario(PocaoDeCura);
-                    p1.inventario.adicionarNoInventario(PocaoDeCura);
-                    p1.inventario.adicionarNoInventario(PocaoDeCura);
-                    System.out.println("\nO Esqueleto dropou: " + PocaoDeMana.getNome() + "!");
-                    p1.inventario.adicionarNoInventario(PocaoDeMana);
-                    Thread.sleep(1000);
-                    System.out.println("\nCom o esqueleto derrotado, você encontra uma escada antiga levando de volta à superfície.");
-                    Thread.sleep(1000);
-                    System.out.println("Ao subir, o sol volta a tocar seu rosto!");
-                    Thread.sleep(1000);
-                    System.out.println("Revigorado, você decide continuar sua jornada...\n");
-                } else if (escolha == 2) {
-                    System.out.println("\nVocê segue pela direita...");
-                    Thread.sleep(1000);
-                    System.out.println("A trilha leva até a entrada de uma caverna escura e silenciosa.");
-                    Thread.sleep(1000);
-                    System.out.println("Talvez haja algo valioso lá dentro...");
-                    Thread.sleep(1000);
-                    System.out.println("Você entra na caverna cautelosamente.");
-                    Thread.sleep(1000);
-                    System.out.println("De repente, uma figura sombria surge à sua frente!");
-                    Thread.sleep(1000);
-                    System.out.println("É um Mago Negro!!!");
-                    Thread.sleep(1000);
-                    combate2.batalhar(p1, magoNegro);
-                    System.out.println("\nO Mago Negro dropou: 4x - " + PocaoDeCura.getNome() + "!");
-                    p1.inventario.adicionarNoInventario(PocaoDeCura);
-                    p1.inventario.adicionarNoInventario(PocaoDeCura);
-                    p1.inventario.adicionarNoInventario(PocaoDeCura);
-                    p1.inventario.adicionarNoInventario(PocaoDeCura);
-                    System.out.println("\nO Mago Negro dropou: " + PocaoDeMana.getNome() + "!");
-                    p1.inventario.adicionarNoInventario(PocaoDeMana);
-                    Thread.sleep(1000);
-                    System.out.println("\nCom o Mago Negro derrotado, o silêncio retorna à caverna.");
-                    Thread.sleep(1000);
-                    System.out.println("Você respira fundo e decide sair dali antes que algo pior apareça.");
-                    Thread.sleep(1000);
-                    System.out.println("Após sua vitória, você decide continuar sua jornada...\n");
+                try {
+                    if(escolha == -1){
+                        System.out.println("Opção invalida, tente novamente!");
+                        continue;
+                    }
+
+                    if (escolha == 1) {
+                        System.out.println("\nVocê segue pela esquerda...");
+                        Thread.sleep(1000);
+                        System.out.println("De repente, o chão cede sob seus pés!");
+                        Thread.sleep(1000);
+                        System.out.println("Você caiu em uma armadilha! Perde alguns pontos de vida.");
+                        p1.setVidaAtual(p1.getVidaAtual() - 20);
+                        Thread.sleep(1000);
+                        System.out.println("\nVocê se levanta com dificuldade, ainda sentindo a dor da queda...");
+                        Thread.sleep(1000);
+                        System.out.println("Ao olhar ao redor, percebe que caiu em uma antiga masmorra subterrânea.");
+                        Thread.sleep(1000);
+                        System.out.println("Do fundo do corredor, você ouve o som de ossos se movendo...");
+                        Thread.sleep(1000);
+                        System.out.println("Um Esqueleto!!!");
+                        Thread.sleep(1000);
+                        f = combate2.batalhar(p1, esqueleto);
+
+                        if(f == false){
+
+                            if (!p1.estaVivo()) {
+                                System.out.println("\nVocê foi derrotado pelo Esqueleto...");
+                                Thread.sleep(1000);
+                                System.out.println("Mas uma força misteriosa o traz de volta ao último ponto de controle!");
+                                Thread.sleep(1000);
+
+                                // Restaura o personagem do save point
+                                p1 = (Personagem) savePoint.clone();
+
+                                System.out.println("\nVocê retornou ao seu estado anterior!");
+                                p1.exibirStatus();
+                                Thread.sleep(1500);
+                                continue;
+                            } else {
+                                v = true;
+                            }
+                            System.out.println("\nO Esqueleto dropou: 4x - " + PocaoDeCura.getNome() + "!");
+                            p1.inventario.adicionarNoInventario(PocaoDeCura);
+                            p1.inventario.adicionarNoInventario(PocaoDeCura);
+                            p1.inventario.adicionarNoInventario(PocaoDeCura);
+                            p1.inventario.adicionarNoInventario(PocaoDeCura);
+                            System.out.println("\nO Esqueleto dropou: " + PocaoDeMana.getNome() + "!");
+                            p1.inventario.adicionarNoInventario(PocaoDeMana);
+                            Thread.sleep(1000);
+                            System.out.println("\nCom o esqueleto derrotado, você encontra uma escada antiga levando de volta à superfície.");
+                            Thread.sleep(1000);
+                            System.out.println("Ao subir, o sol volta a tocar seu rosto!");
+                            Thread.sleep(1000);
+                            System.out.println("Revigorado, você decide continuar sua jornada...\n");
+
+                            System.out.println("\n======================================================================== ");
+                            System.out.println("Utilize a poção de cura que você ganhou para restaurar sua vida!");
+                            System.out.println("======================================================================== ");
+                            break;
+                        }
+
+                    } else if (escolha == 2) {
+                        System.out.println("\nVocê segue pela direita...");
+                        Thread.sleep(1000);
+                        System.out.println("A trilha leva até a entrada de uma caverna escura e silenciosa.");
+                        Thread.sleep(1000);
+                        System.out.println("Talvez haja algo valioso lá dentro...");
+                        Thread.sleep(1000);
+                        System.out.println("Você entra na caverna cautelosamente.");
+                        Thread.sleep(1000);
+                        System.out.println("De repente, uma figura sombria surge à sua frente!");
+                        Thread.sleep(1000);
+                        System.out.println("É um Mago Negro!!!");
+                        Thread.sleep(1000);
+                        f = combate2.batalhar(p1, magoNegro);
+
+                        if(f == false){
+
+                            if (!p1.estaVivo()) {
+                                System.out.println("\nVocê foi derrotado pelo Mago Negro...");
+                                Thread.sleep(1000);
+                                System.out.println("Mas uma força misteriosa o traz de volta ao último ponto de controle!");
+                                Thread.sleep(1000);
+
+                                // Restaura o personagem do save point
+                                p1 = (Personagem) savePoint.clone();
+
+                                System.out.println("\nVocê retornou ao seu estado anterior!");
+                                p1.exibirStatus();
+                                Thread.sleep(1500);
+                                continue;
+
+                            } else {
+                                v = true;
+                            }
+                            System.out.println("\nO Mago Negro dropou: 4x - " + PocaoDeCura.getNome() + "!");
+                            p1.inventario.adicionarNoInventario(PocaoDeCura);
+                            p1.inventario.adicionarNoInventario(PocaoDeCura);
+                            p1.inventario.adicionarNoInventario(PocaoDeCura);
+                            p1.inventario.adicionarNoInventario(PocaoDeCura);
+                            System.out.println("\nO Mago Negro dropou: " + PocaoDeMana.getNome() + "!");
+                            p1.inventario.adicionarNoInventario(PocaoDeMana);
+                            Thread.sleep(1000);
+                            System.out.println("\nCom o Mago Negro derrotado, o silêncio retorna à caverna.");
+                            Thread.sleep(1000);
+                            System.out.println("Você respira fundo e decide sair dali antes que algo pior apareça.");
+                            Thread.sleep(1000);
+                            System.out.println("Após sua vitória, você decide continuar sua jornada...\n");
+
+                            System.out.println("\n======================================================================== ");
+                            System.out.println("Utilize a poção de cura que você ganhou para restaurar sua vida!");
+                            System.out.println("======================================================================== ");
+                            break;
+                        }
+                    }
+
+                } catch (NumberFormatException e) {
+                    System.out.println("\nEntrada inválida! Digite apenas números.");
                 }
 
-            } catch (NumberFormatException e) {
-                System.out.println("\nEntrada inválida! Digite apenas números.");
             }
-
         }
-        System.out.println("\n======================================================================== ");
-        System.out.println("Utilize a poção de cura que você ganhou para restaurar sua vida!");
-        System.out.println("======================================================================== ");
 
 
-        Personagem savePoint = new Personagem(p1);
+
+        Personagem savePoint2 = new Personagem(p1);
         System.out.println("\n💾 Ponto de controle salvo! Se você cair em batalha, voltará a este estado.\n");
 
         menuPrincipal(p1);
@@ -302,8 +361,12 @@ public class Jogo {
         boolean vitoria = false;
 
         while (!vitoria) {
-            combate3.batalhar(p1, drakthor);
-
+            f = combate3.batalhar(p1, drakthor);
+            if(f == true){
+                Thread.sleep(1500);
+                System.out.println("Você não pode fugir!!\nEnfrente seu inimigo!!");
+                continue;
+            }
             if (!p1.estaVivo()) {
                 System.out.println("\nVocê foi derrotado pelo " + drakthor.getNome() + "...");
                 Thread.sleep(1000);
@@ -311,7 +374,7 @@ public class Jogo {
                 Thread.sleep(1000);
 
                 // Restaura o personagem do save point
-                p1 = (Personagem) savePoint.clone();
+                p1 = (Personagem) savePoint2.clone();
 
                 System.out.println("\nVocê retornou ao seu estado anterior!");
                 p1.exibirStatus();

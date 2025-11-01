@@ -69,7 +69,7 @@ public class SistemaCombateTurnos {
 
 
     // Combate em turnos
-    public void batalhar(Personagem jogador, SubClasseInimigo inimigo) throws Exception {
+    public boolean batalhar(Personagem jogador, SubClasseInimigo inimigo) throws Exception {
         System.out.println("\n============================================");
         System.out.println("Início do combate entre " + jogador.getNome() + " e " + inimigo.getNome() + "!");
         System.out.println("============================================");
@@ -162,7 +162,7 @@ public class SistemaCombateTurnos {
 
                     if(dadoJogador < 10){
                         System.out.println(jogador.getNome() + " fugiu da batalha!");
-                        return; // Sai do combate
+                        return true;
                     }
                     else{
                         dano = Math.max(0, inimigo.getAtaque() - jogador.getDefesa());
@@ -181,7 +181,12 @@ public class SistemaCombateTurnos {
         // Resultado final (caso jogador vença, experiência já foi atribuída dentro do método do inimigo)
         if (jogador.estaVivo()) {
             System.out.println(jogador.getNome() + " venceu a batalha!");
+            return false;
+        }else{
+            return true;
         }
+
+
     }
 
 
