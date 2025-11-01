@@ -46,7 +46,70 @@ public class Main {
         pause(3000);
         */
         // Escolha do nome
-        System.out.print("Antes de partir, diga-nos seu nome, herói: ");
+        /*System.out.print("Antes de partir, diga-nos seu nome, herói: ");
+
+
+
+        // Criação do personagem
+        Personagem p1 = new Personagem(nome, racaEscolhida, classeEscolhida);
+        p1.ganharExperiencia(300);
+        p1.exibirStatus();
+
+        // Exemplo de inimigo e combate
+        SubClasseInimigo goblin = SubClasseInimigo.GOBLIN(3);
+        goblin.exibirStatus();
+
+        ItemConsumivel PocaoDeCura = ItemConsumivel.POCAO_CURA();
+        ItemConsumivel PocaoDeMana = ItemConsumivel.POCAO_MANA();
+
+
+        p1.inventario.adicionarNoInventario(PocaoDeCura);
+        p1.inventario.adicionarNoInventario(PocaoDeMana);
+
+        ItemEquipavel espada = ItemEquipavel.ESPADA_DE_FERRO;
+        p1.inventario.adicionarNoInventario(espada);
+
+
+        //Exemplo Combate
+        SistemaCombateTurnos combate = new SistemaCombateTurnos();
+        combate.batalhar(p1, goblin);*/
+
+        //Criando inventário
+
+
+        /*
+
+        // Criar alguns itens equipáveis
+        ItemEquipavel capacete = ItemEquipavel.CAPACETE_FERRO;
+        ItemEquipavel capacete2 = ItemEquipavel.CAPACETE_OURO;
+        ItemEquipavel peitoral = ItemEquipavel.PEITORAL_AÇO;
+        ItemEquipavel espada = ItemEquipavel.ESPADA_FLAMEJANTE;
+
+        // Adicionar no inventário
+        inv.adicionarNoInventario(capacete);
+        inv.adicionarNoInventario(capacete2);
+        inv.adicionarNoInventario(peitoral);
+        inv.adicionarNoInventario(espada);
+        inv.adicionarNoInventario(peitoral);
+
+
+        p1.exibirStatus();
+
+
+        System.out.println("\nEquipando capacete e espada...");
+        p1.equiparItem(capacete);
+        p1.equiparItem(espada);
+
+        p1.exibirStatus();
+
+        System.out.println("\nTentando equipar capacete2 (já há um capacete equipado)...");
+        p1.equiparItem(capacete2);
+
+
+        System.out.println("\nTentando equipar peitoral (slot livre)...");
+        p1.equiparItem(peitoral);
+        */
+
         String nome = reader.readLine();
 
         System.out.println("Muito bem, " + nome + ". Sua jornada começa agora.\n");
@@ -95,79 +158,26 @@ public class Main {
                 classeEscolhida = new Guerreiro();
             }
         }
+        ItemEquipavel espadaDeFerro = ItemEquipavel.ESPADA_DE_FERRO;
+        ItemEquipavel cajadoSimples = ItemEquipavel.CAJADO_SIMPLES;
+        ItemEquipavel arcoDeMadeira = ItemEquipavel.ARCO_DE_MADEIRA;
+        ItemEquipavel adagaDeFerro = ItemEquipavel.ADAGA_DE_FERRO;
+        ItemEquipavel clavaDeFerro = ItemEquipavel.CLAVA_DE_FERRO;
 
-
-        // Criação do personagem
         Personagem p1 = new Personagem(nome, racaEscolhida, classeEscolhida);
-        p1.ganharExperiencia(300);
-        p1.exibirStatus();
+        p1.inventario.adicionarNoInventario(espadaDeFerro);
+        p1.inventario.adicionarNoInventario(cajadoSimples);
+        p1.inventario.adicionarNoInventario(arcoDeMadeira);
+        p1.inventario.adicionarNoInventario(adagaDeFerro);
+        p1.inventario.adicionarNoInventario(clavaDeFerro);
 
-        // Exemplo de inimigo e combate
-        SubClasseInimigo goblin = SubClasseInimigo.GOBLIN();
-        goblin.exibirStatus();
+        System.out.println(p1.inventario.toString());
 
-        //Exemplo Combate
-        SistemaCombateTurnos combate = new SistemaCombateTurnos();
-        combate.batalhar(p1, goblin);
-
-        //Criando inventário
-        Inventario inv = new Inventario();
-        p1.inventario = inv;
-        /*
-
-        // Criar alguns itens equipáveis
-        ItemEquipavel capacete = ItemEquipavel.CAPACETE_FERRO;
-        ItemEquipavel capacete2 = ItemEquipavel.CAPACETE_OURO;
-        ItemEquipavel peitoral = ItemEquipavel.PEITORAL_AÇO;
-        ItemEquipavel espada = ItemEquipavel.ESPADA_FLAMEJANTE;
-
-        // Adicionar no inventário
-        inv.adicionarNoInventario(capacete);
-        inv.adicionarNoInventario(capacete2);
-        inv.adicionarNoInventario(peitoral);
-        inv.adicionarNoInventario(espada);
-        inv.adicionarNoInventario(peitoral);
+        p1.inventario.organizarInventario();
 
 
-        p1.exibirStatus();
+        System.out.println(p1.inventario.toString());
 
-
-        System.out.println("\nEquipando capacete e espada...");
-        p1.equiparItem(capacete);
-        p1.equiparItem(espada);
-
-        p1.exibirStatus();
-
-        System.out.println("\nTentando equipar capacete2 (já há um capacete equipado)...");
-        p1.equiparItem(capacete2);
-
-
-        System.out.println("\nTentando equipar peitoral (slot livre)...");
-        p1.equiparItem(peitoral);
-        */
-
-        ItemConsumivel PocaoDeCura = ItemConsumivel.POCAO_CURA();
-        ItemConsumivel PocaoDeMana = ItemConsumivel.POCAO_MANA();
-
-        inv.adicionarNoInventario(PocaoDeCura);
-        inv.adicionarNoInventario(PocaoDeMana);
-
-        p1.setVidaAtual(20);
-        p1.setManaAtual(0);
-        p1.exibirStatus();
-
-
-        inv.listarItensEquipados();
-        inv.listarItensInventario();
-
-
-        p1.usarItem(PocaoDeCura);
-        p1.usarItem(PocaoDeMana);
-
-        p1.exibirStatus();
-
-        inv.listarItensEquipados();
-        inv.listarItensInventario();
     }
 
     // Pausa para narrativa

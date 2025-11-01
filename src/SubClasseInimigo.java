@@ -44,23 +44,75 @@ public class SubClasseInimigo extends Personagem {
         }
     }
 
-    public static SubClasseInimigo GOBLIN() throws Exception {
-        return new SubClasseInimigo("Goblin", Raca.ORC(), new Ladino(), 3, 50);
+    public static SubClasseInimigo GOBLIN(int nivel) throws Exception {
+        return new SubClasseInimigo("Goblin", Raca.ORC(), new Ladino(), nivel, 100);
     }
 
-    public static SubClasseInimigo ESQUELETO() throws Exception {
-        return new SubClasseInimigo("Esqueleto", Raca.HUMANO(), new Guerreiro(), 3, 75);
+    public static SubClasseInimigo ESQUELETO(int nivel) throws Exception {
+        return new SubClasseInimigo("Esqueleto", Raca.HUMANO(), new Guerreiro(), nivel, 40);
     }
 
-    public static SubClasseInimigo MAGO_NEGRO() throws Exception {
-        return new SubClasseInimigo("Mago Negro", Raca.ELFO(), new Mago(), 4, 100);
+    public static SubClasseInimigo MAGO_NEGRO(int nivel) throws Exception {
+        return new SubClasseInimigo("Mago Negro", Raca.ELFO(), new Mago(), nivel, 40);
     }
 
-    public static SubClasseInimigo ORC_BRUTO() throws Exception {
-        return new SubClasseInimigo("Orc Bruto", Raca.ORC(), new Guerreiro(), 5, 150);
+    public static SubClasseInimigo DRAGAO_ANCIAO(int nivel) throws Exception {
+        return new SubClasseInimigo("Drakthor", Raca.DRAGAO(), new Guerreiro(), nivel, 80);
     }
 
-    public static SubClasseInimigo DEMONIO_MENOR() throws Exception {
-        return new SubClasseInimigo("Demônio Menor", Raca.ANAO(), new Paladino(), 6, 200);
+
+    @Override
+    public String toString() {
+        return "\n" +
+                "===== INIMIGO =====\n" +
+                "Nome: " + nome + "\n" +
+                "Raça: " + raca.getNome() + "\n" +
+                "Classe: " + classe.getNome() + "\n" +
+                "Nível: " + nivel + "\n" +
+                "XP Drop: " + experienciaDrop + "\n" +
+                "Vida: " + vidaAtual + "/" + vidaMaxima + "\n" +
+                "Mana: " + manaAtual + "/" + manaMaxima + "\n" +
+                "Stamina: " + staminaAtual + "/" + staminaMaxima + "\n" +
+                "Ataque: " + ataque + "\n" +
+                "Defesa: " + defesa + "\n" +
+                "===================\n";
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (obj.getClass() != this.getClass()) return false;
+
+        SubClasseInimigo s = (SubClasseInimigo) obj;
+
+        if (
+                (this.nome.equals(s.nome)) ||
+                        (this.raca.equals(s.raca)) ||
+                        (this.classe.equals(s.classe)) ||
+                        this.ataque != s.ataque ||
+                        this.defesa != s.defesa ||
+                        this.vidaMaxima != s.vidaMaxima ||
+                        this.vidaAtual != s.vidaAtual ||
+                        this.manaAtual != s.manaAtual ||
+                        this.manaMaxima != s.manaMaxima ||
+                        this.staminaAtual != s.staminaAtual ||
+                        this.staminaMaxima != s.staminaMaxima ||
+                        this.nivel != s.nivel ||
+                        this.experienciaDrop != s.experienciaDrop ||
+                        (this.inventario.equals(s.inventario))
+        ) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int retorno = super.hashCode();
+
+        retorno = retorno * 7 + ((Integer)experienciaDrop).hashCode();
+
+        if (retorno < 0) retorno = -retorno;
+        return retorno;
     }
 }

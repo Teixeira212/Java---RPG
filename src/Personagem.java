@@ -1,10 +1,11 @@
 import Classes.Classe;
+import java.util.List;
 
-public class Personagem {
+public class Personagem implements Cloneable {
     protected String nome;
     protected Inventario inventario;
-    protected Raca raca;
-    protected Classe classe;
+    protected Raca raca; // Assumindo que esta classe existe
+    protected Classe classe; // Assumindo que esta classe existe
 
     protected int ataque;
     protected int defesa;
@@ -22,13 +23,12 @@ public class Personagem {
 
     public Personagem(String nome, Raca raca, Classe classe) throws Exception {
 
-
         this.nome = nome;
         this.raca = raca;
         this.classe = classe;
         this.inventario = new Inventario();
 
-        //Atributos com base em raça e classe
+        // Atributos com base em raça e classe
         this.vidaMaxima = classe.getBaseVida() + raca.getBonusVida();
         this.ataque = classe.getBaseAtaque() + raca.getBonusAtaque();
         this.defesa = classe.getBaseDefesa() + raca.getBonusDefesa();
@@ -42,8 +42,34 @@ public class Personagem {
         this.nivel = 1;
         this.experienciaAtual = 0;
         this.experienciaNecessaria = calcularExperienciaNecessaria();
+    }
 
+    // Construtor de cópia (Deep Copy: ESSENCIAL para o Save Point)
+    public Personagem(Personagem modelo) throws Exception {
+        if (modelo == null) throw new Exception("Modelo ausente");
 
+        this.nome = modelo.nome;
+        this.raca = modelo.raca;
+        this.classe = modelo.classe;
+
+        this.ataque = modelo.ataque;
+        this.defesa = modelo.defesa;
+        this.vidaMaxima = modelo.vidaMaxima;
+        this.vidaAtual = modelo.vidaAtual;
+        this.manaAtual = modelo.manaAtual;
+        this.manaMaxima = modelo.manaMaxima;
+        this.staminaAtual = modelo.staminaAtual;
+        this.staminaMaxima = modelo.staminaMaxima;
+        this.nivel = modelo.nivel;
+        this.experienciaAtual = modelo.experienciaAtual;
+        this.experienciaNecessaria = modelo.experienciaNecessaria;
+
+        // Clonagem profunda do inventário
+        if (modelo.inventario != null) {
+            this.inventario = (Inventario) modelo.inventario.clone();
+        } else {
+            this.inventario = new Inventario();
+        }
     }
 
     // Getters
@@ -64,7 +90,7 @@ public class Personagem {
         this.manaAtual = Math.max(0, Math.min(manaAtual, this.manaMaxima));
     }
 
-    //EXPERIENCIA
+    // EXPERIENCIA
     private int calcularExperienciaNecessaria() {
         return 100 * nivel;
     }
@@ -82,15 +108,16 @@ public class Personagem {
         nivel++;
         experienciaNecessaria = calcularExperienciaNecessaria();
 
-        // Escala os atributos com base no nível
-        vidaMaxima = (classe.getBaseVida() + raca.getBonusVida()) * nivel;
-        ataque = (classe.getBaseAtaque() + raca.getBonusAtaque()) * nivel;
-        defesa = (classe.getBaseDefesa() + raca.getBonusDefesa()) * nivel;
-        manaMaxima = (classe.getBaseMana() + raca.getBonusMana()) * nivel;
-        staminaAtual = (classe.getBaseStamina() + raca.getBonusStamina()) * nivel;
+        // Correção da lógica de nível: Adiciona os bônus base
+        vidaMaxima += (classe.getBaseVida() + raca.getBonusVida());
+        ataque += (classe.getBaseAtaque() + raca.getBonusAtaque());
+        defesa += (classe.getBaseDefesa() + raca.getBonusDefesa());
+        manaMaxima += (classe.getBaseMana() + raca.getBonusMana());
+        staminaMaxima += (classe.getBaseStamina() + raca.getBonusStamina());
 
         vidaAtual = vidaMaxima;
         manaAtual = manaMaxima;
+        staminaAtual = staminaMaxima; // Adicionado para consistência
 
         System.out.println(nome + " subiu para o nível " + nivel + "!");
     }
@@ -105,9 +132,6 @@ public class Personagem {
             System.out.println("\n===============================================");
             System.out.println(nome + " foi derrotado! FIM DE JOGO!!!");
             System.out.println("===============================================\n");
-
-            System.exit(0);
-
         }
     }
 
@@ -181,7 +205,9 @@ public class Personagem {
         System.out.println(item.getNome() + " teve seus bônus removidos.");
     }
 
+
     public void usarItem(Item item) {
+
         if (item.getQuantidade() <= 0) {
             System.out.println("Você não tem mais " + item.getNome() + "!");
             return;
@@ -192,12 +218,12 @@ public class Personagem {
         switch (item.getEfeito().toLowerCase()) {
             case "cura":
             case "poção de cura":
-                curar(50); // recupera 50 pontos de vida
+                curar(100);
                 break;
 
             case "mana":
             case "poção de mana":
-                restaurarMana(30); // recupera 30 de mana
+                restaurarMana(30);
                 break;
 
             default:
@@ -208,6 +234,7 @@ public class Personagem {
 
         if (item.getQuantidade() == 0) {
             System.out.println(item.getNome() + " acabou!");
+            inventario.removerDoInventario(item);
         }
     }
 
@@ -220,7 +247,7 @@ public class Personagem {
         vidaAtual = Math.min(vidaAtual + pontos, vidaMaxima);
         int curado = vidaAtual - vidaAntes;
         System.out.println(nome + " recuperou " + curado + " pontos de vida! (" + vidaAtual + "/" + vidaMaxima + ")");
-    };
+    }
 
     public void restaurarMana(int pontos) {
         if (manaAtual == manaMaxima) {
@@ -232,7 +259,92 @@ public class Personagem {
         int recuperado = manaAtual - manaAntes;
         System.out.println(nome + " recuperou " + recuperado + " pontos de mana! (" + manaAtual + "/" + manaMaxima + ")");
     }
+
+    @Override
+    public String toString() {
+        return "\n" +
+                "Nome: " + nome + "\n" +
+                "Raça: " + raca.getNome() + "\n" +
+                "Classe: " + classe.getNome() + "\n" +
+                "--------------------------------\n" +
+                "Nível: " + nivel + "\n" +
+                "XP: " + experienciaAtual + "/" + experienciaNecessaria + "\n" +
+                "--------------------------------\n" +
+                "Vida: " + vidaAtual + "/" + vidaMaxima + "\n" +
+                "Mana: " + manaAtual + "/" + manaMaxima + "\n" +
+                "Stamina: " + staminaAtual + "\n" +
+                "Ataque: " + ataque + "\n" +
+                "Defesa: " + defesa + "\n" +
+                "================================\n";
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) return true;
+        if (obj == null || obj.getClass() != this.getClass()) return false;
+
+        Personagem p = (Personagem) obj;
+
+        if (this.ataque != p.ataque || this.defesa != p.defesa || this.vidaMaxima != p.vidaMaxima ||
+                this.vidaAtual != p.vidaAtual || this.manaAtual != p.manaAtual || this.manaMaxima != p.manaMaxima ||
+                this.staminaAtual != p.staminaAtual ||
+                this.staminaMaxima != p.staminaMaxima ||
+                this.nivel != p.nivel || this.experienciaAtual != p.experienciaAtual ||
+                this.experienciaNecessaria != p.experienciaNecessaria
+        ) return false;
+
+        if (!this.nome.equals(p.nome)) return false;
+        if (!this.raca.equals(p.raca)) return false;
+        if (!this.classe.equals(p.classe)) return false;
+        if (!this.inventario.equals(p.inventario)) return false; // Requer .equals() em Inventario
+
+        return true;
+    }
+
+    public int hashCode() {
+        int retorno = 7;
+
+        // Objetos simples
+        if (nome != null) retorno = retorno * 31 + nome.hashCode();
+        if (raca != null) retorno = retorno * 31 + raca.hashCode();
+        if (classe != null) retorno = retorno * 31 + classe.hashCode();
+
+        // Atributos primitivos
+        retorno = retorno * 31 + ((Integer) ataque).hashCode();
+        retorno = retorno * 31 + ((Integer) defesa).hashCode();
+        retorno = retorno * 31 + ((Integer) vidaMaxima).hashCode();
+        retorno = retorno * 31 + ((Integer) vidaAtual).hashCode();
+        retorno = retorno * 31 + ((Integer) manaAtual).hashCode();
+        retorno = retorno * 31 + ((Integer) manaMaxima).hashCode();
+        retorno = retorno * 31 + ((Integer) staminaAtual).hashCode();
+        retorno = retorno * 31 + ((Integer) staminaMaxima).hashCode();
+        retorno = retorno * 31 + ((Integer) nivel).hashCode();
+        retorno = retorno * 31 + ((Integer) experienciaAtual).hashCode();
+        retorno = retorno * 31 + ((Integer) experienciaNecessaria).hashCode();
+
+        // Inventário: percorre a lista de itens
+        if (inventario != null && inventario.getItens() != null) {
+            for (Item item : inventario.getItens()) {
+                if (item != null) {
+                    retorno = retorno * 31 + item.hashCode();
+                }
+            }
+        }
+
+        if (retorno<0) retorno=-retorno;
+        return retorno;
+    }
+
+    public void setInventario(Inventario inventario) {
+        this.inventario = inventario;
+    }
+
+    @Override
+    public Object clone() {
+        try {
+            return new Personagem(this);
+        } catch (Exception erro) {
+            return null;
+        }
+    }
 }
-
-
-

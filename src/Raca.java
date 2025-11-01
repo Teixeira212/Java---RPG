@@ -39,4 +39,54 @@ public class Raca {
     public static Raca ANAO() {
         return new Raca("Anão", 6, 3, 6, 0, 4);
     }
+
+    public static Raca DRAGAO() {return new Raca("Dragão", 8, 4, 6, 6, 7);}
+
+    @Override
+    public String toString() {
+        return "Raça: " + nome +
+                " | Vida: " + bonusVida +
+                " | Ataque: " + bonusAtaque +
+                " | Defesa: " + bonusDefesa +
+                " | Mana: " + bonusMana +
+                " | Stamina: " + bonusStamina;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) return true;
+        if (obj == null) return false;
+        if (obj.getClass() != this.getClass()) return false;
+
+        Raca r = (Raca) obj;
+
+        if (!this.nome.equals(r.nome) ||
+                this.bonusVida != r.bonusVida ||
+                this.bonusAtaque != r.bonusAtaque ||
+                this.bonusDefesa != r.bonusDefesa ||
+                this.bonusMana != r.bonusMana ||
+                this.bonusStamina != r.bonusStamina)
+            return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int retorno = 7;
+
+        if (this.nome != null)
+            retorno = retorno * 7 + this.nome.hashCode();
+
+        retorno = retorno * 7 + ((Integer)this.bonusVida).hashCode();
+        retorno = retorno * 7 + ((Integer)this.bonusAtaque).hashCode();
+        retorno = retorno * 7 + ((Integer)this.bonusDefesa).hashCode();
+        retorno = retorno * 7 + ((Integer)this.bonusMana).hashCode();
+        retorno = retorno * 7 + ((Integer)this.bonusStamina).hashCode();
+
+        if (retorno < 0)
+            retorno =-retorno;
+
+        return retorno;
+    }
 }
