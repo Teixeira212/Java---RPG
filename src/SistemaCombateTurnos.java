@@ -182,9 +182,8 @@ public class SistemaCombateTurnos {
         if (jogador.estaVivo()) {
             System.out.println(jogador.getNome() + " venceu a batalha!");
             return false;
-        }else{
-            return true;
         }
+        return false;
 
 
     }

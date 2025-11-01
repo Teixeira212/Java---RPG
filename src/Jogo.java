@@ -247,7 +247,7 @@ public class Jogo {
                                 Thread.sleep(1000);
 
                                 // Restaura o personagem do save point
-                                p1 = (Personagem) savePoint.clone();
+                                p1 = new Personagem(savePoint);
 
                                 System.out.println("\nVocê retornou ao seu estado anterior!");
                                 p1.exibirStatus();
@@ -300,7 +300,7 @@ public class Jogo {
                                 Thread.sleep(1000);
 
                                 // Restaura o personagem do save point
-                                p1 = (Personagem) savePoint.clone();
+                                p1 = new Personagem(savePoint);
 
                                 System.out.println("\nVocê retornou ao seu estado anterior!");
                                 p1.exibirStatus();
